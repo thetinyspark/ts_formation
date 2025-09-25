@@ -6,12 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx tsc && node dist/index.js",
-    "start:native": "ts-node src/index.ts"
+    "start:watch": "npx tsc --watch",
+    "start:native": "ts-node src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "show:version": "tsc --version"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0"
   }
 }
