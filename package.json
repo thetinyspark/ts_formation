@@ -8,7 +8,7 @@
     "start": "npx tsc && node dist/index.js",
     "start:watch": "npx tsc --watch",
     "start:native": "ts-node src/index.ts",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "ts-node-dev --respawn src/index.ts",
     "show:version": "tsc --version"
   },
   "author": "",
