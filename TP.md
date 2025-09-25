@@ -1,23 +1,21 @@
-TP n°2
+TP n°3
 
-On va créer une interface IFlyingCharacter
-cette interface déclare une méthode 
+Modifier la classe Weapong. 
+Ajoutez une méthode 
 
 ```typescript
-fly():void
+private calc()
 ```
 
-qui permet de voler. 
-Le but du jeu est de créer d'autres types de héros, ( au moins qui hérite 
-de la classe asbtraite Heroe et un autre qui n'en hérite pas) et de leur faire 
-implémenter le contrat d'interface IFlyingCharacter. 
+qui recalcule les dmg. 
+Les dmg ainsi calculés seront stockés sur une propriéé
+```typescript
+private _nextDmg:number;_
+```
 
+Ainsi, lorsque vous réclamerez les prochains dmg, vous aurez juste 
+à réaliser le calcul de critique et à multiplier. 
 
-
-
-BONUS: 
-
-- Créer des instances de héros volants et non volants
-- Créer une liste qui stocke les héros qui implémentent IMutant 
-- Créer une autre liste qui stocke les héros qui implément IFlyingChracter
-
+Le calcul des dmg doit s'effectuer à chaque fois qu'un setter 
+est utilisé. Bien sur il faut ajouter les setters des dégâts spéciaux 
++ base dmg
