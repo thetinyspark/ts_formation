@@ -1,35 +1,51 @@
 // classe
 class Heroe{
     public name:string;
-    protected _age:number;
+    public age:number;
+    public power:string;
 
-    constructor(name:string){
+    constructor(name:string, age:number, power:string){
         this.name = name;
-        this._age = 30;
+        this.age = age;
+        this.power = power;
     }
 
     public introduceMySelf():void{
-        console.log(this.name +","+this._age);
+        const str = `I am ${this.name}, I am ${this.age} years old and my power is ${this.power}.`;
+        console.log(str);
     }
 }
 
+// on déclare un type pour les données
+type HeroeInfo = {name:string;age:number;power:string;};
 
-// héritage
-class SuperHeroe extends Heroe{
-    constructor(name:string){
-        // appaler au constructeur de la classe parente
-        super(name);
-        this._age = 41;
-    }
+// on peut assumer que ces données viennent d'une API
+const data:HeroeInfo[] = [
+    {name:"Hulk", age:30, power:"being green"},
+    {name:"Iron Man", age:35, power:"technology"},
+    {name:"Captain America", age:25, power:"being patriotic"},
+    {name:"Hawkeye", age:25, power:"archery"},
+    {name:"Thor", age:25, power:"being a god"}
+];
 
-    // surcharge de méthode
-    public introduceMySelf():void{
-        super.introduceMySelf(); // appel de la méthode parente
-        console.log("Je suis " + this.name + ", " + this._age + " ans");
-    }
+
+function createHeroes(data:HeroeInfo[]):Heroe[]{
+    return data.map( 
+        (item) => new Heroe(item.name, item.age, item.power)
+    );
+
+    return data.map( 
+        (item) => item as Heroe
+    );
+
+    return data as Heroe[];
+    // les 3 returns sont équivalents
+    // on transforme chaque élément HeroeInfo en instance de Heroe
+    // en le castant avec as. 
+    // On pourrait aussi utiliser new Heroe(item.name, item.age, item.power)
+    // mais c'est plus verbeux. 
+    // C'est un peu comme un "type assertion" en C#
 }
 
-const heroe = new Heroe("Batman");
-const heroe2 = new SuperHeroe("Spiderman");
-heroe.introduceMySelf();
-heroe2.introduceMySelf();
+createHeroes(data).forEach( h=>h.introduceMySelf())
+
