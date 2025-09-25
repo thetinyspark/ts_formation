@@ -1,28 +1,16 @@
-// Array of strings
-const tab:string[] = ["HTML", "CSS", "JS", "TS"];
-console.log(tab);
+enum Direction {
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3
+}; 
 
-const isFormateurSuperCool: boolean = true;
-console.log(isFormateurSuperCool);
+const num = 3;
+const dir:Direction = num;
 
-// null && undefined
+let haut:Direction = Direction.Up;
+let bas:Direction = Direction.Down;
+let left:Direction = Direction.Left;
+let right:Direction = Direction.Right;
 
-let toto = null;
-let tata;
-console.log(toto, tata, tata === toto);
-
-
-// number and strings 
-let value1 = 40; 
-let value2 = [40];
-
-
-// cast string to number automatically
-console.log(value1 == value2);
-
-// with === there's no automatic cast
-console.log(value1 === value2);
-
-// eval
-const obj = eval("{name: 'toto'}");
-console.log(obj);
+console.log(dir === Direction.Right, haut, bas, left, right);
