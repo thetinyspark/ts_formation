@@ -1,7 +1,12 @@
 // import "reflect-metadata";
 
 import { DynamicFactory } from "./factory/DynamicFactory";
+import { Heroe } from "./heroes/Heroe";
+import { NonFlyingHeroe } from "./heroes/NonFlyingHeroe";
+import { ShonenHeroe } from "./heroes/ShonenHeroe";
+import { IFlyingCharacter } from "./interface/IFlyingCharacter";
 
+    type Constructable<T> = new (...args: any[]) => T;
 const factory = new DynamicFactory();
 
 // décorateur de fonction/méthode
@@ -24,32 +29,71 @@ function Logger() {
   };
 }
 
-function Injectable( key:string, builder:Function, uniq:boolean ){
-    return function (constructor:Function){
-        factory.registerBuilder( key, builder, uniq);
+function Injectable<T>( key:string, uniq:boolean ){
+
+    return function (target: Constructable<T>){
+        factory.registerBuilder( 
+            key, 
+            (...params:any)=> new target(...params)
+            , uniq
+        );
     }
 }
 
-function Inject(key:string, ...params:any[]){
-    return factory.createInstance(key, ...params);
+function Inject<T>(key:string, ...params:any[]){
+    return factory.createInstance<T>(key, ...params);
+}
+
+// mixin
+function makeFlying<T extends Constructable<any>>(userClass:T){
+    return class extends userClass implements IFlyingCharacter{
+        constructor(...args:any[]){super(...args);}
+        public fly():void{
+            console.log("coucou je suis un volant");
+        }
+    }
 }
 
 
 
+interface IEmployee{
+    getSpeed():number
+}
 
-@Injectable("Test", ()=> new Test(), false)
-class Test {
 
-  public name:string;
-
-//   @LogMethodCall
-  helloWorld(param: string) {
-    // console.log(param);
+class Employee implements IEmployee {
+  getSpeed(): number {
+      return this.speed;
   }
-
-  constructor(){this.name = ""}
+  protected speed:number = 5;
 }
 
-const test1 = Inject("Test", 10,10);
-const test2 = Inject("Test", 10,10);
-console.log(test1 === test2);
+@Injectable("Test", true)
+class SuperEmployee extends Employee{
+  constructor(){
+    super();
+    this.speed = 10;
+  }
+}
+
+// avec l'injection de dépendances, on minimise grandement le nombre de
+// dépendances à des classes pour se focaliser sur les dépendances aux 
+// interfaces ( ce qui est mieux )
+
+// on évite de refactorer du code qui aurait autrement du être écrit en dur
+// on peut également créer plusieurs profils de configuration de l'injecteur de 
+// dépendances afin de comparer les performances du code
+class Boss{
+    public employee:IEmployee; 
+    constructor(){
+        this.employee =  Inject<IEmployee>("Test") as IEmployee;
+    }
+}
+
+// permet de créer une nouvelle classe qui implémente IFlyingCharacter
+// à l'aide de mixins
+class FlyingBoss extends makeFlying(NonFlyingHeroe){}
+const obj = new FlyingBoss().fly();
+
+console.log( new Boss().employee.getSpeed());
+
