@@ -1,10 +1,10 @@
-import { Weapon } from "./weapon/Weapon";
+import { UI } from "./ui/Inventory";
 
-const sword:Weapon = new Weapon();
-// sword.name = "Excalibur";
+const inventory = new UI.Inventory();
+const inventory2 = new UI.SubUI.SubInventory();
+inventory.addItem("Sword");
+inventory.addItem("Shield");
+inventory.removeItem("Sword");  // Removes "Sword" from inventory
 
-for( let i = 0; i < 10; i++){
-    sword.crit = 0;
-    sword.specialDmg = Math.floor(Math.random() * 10);
-    console.log(sword.dmg);
-}
+console.log(inventory.items);
+console.log(inventory2);

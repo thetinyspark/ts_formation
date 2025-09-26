@@ -1,20 +1,12 @@
-TP n°3
+TP n°4
 
-Modifier la classe Weapon. 
-Ajoutez une méthode 
 
-```typescript
-private calc()
-```
+Créer un namespace nommé Marvel qui contiendra des héros qui héritent 
+de classe Heroe et qui implémentent IMUtant et peut être IFlyingCharacter
 
-qui recalcule les dmg. 
-Les dmg ainsi calculés seront stockés sur une propriéé
-```typescript
-private _nextDmg:number;
-```
+Créer un namespace nommé DCComics qui contiendra des héros qui héritent 
+de classe Heroe et qui implémentent IMUtant et peut être IFlyingCharacter
 
-Ainsi, lorsque vous réclamerez les prochains dmg, vous aurez juste 
-à réaliser le calcul de critique et à multiplier. 
-
-Le calcul des dmg doit s'effectuer à chaque fois qu'un setter 
-est utilisé. Bien sur il faut ajouter les setters des dégâts spéciaux + base dmg
+- Chacun de ces espaces de noms (namespace) doit contenir une classe 
+nommée League. Cette classe a pour fonctionnalité de retourner une liste 
+de héros avec la méthode "getLeague():Heroe[]";
