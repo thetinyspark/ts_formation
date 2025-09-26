@@ -1,10 +1,8 @@
-TP n°5
+TP n°6
 
-- Créer une classe générique HeroePool
-utilisant la généricité, vous devez pouvoir 
-stocker des héros, les associer à une clé (comme dans inventory) et les retrouver par le biais de leur clé. 
+- Enregistrer un builder sur la dynamicFactory permettant de retourner un héros qui vole. 
+- Faire la même chose mais avec un WalkingDead
+- Créer une variable qui pourra accueillir indifféremment les 2 valeurs (donc utiliser la bonne interface pour typer la variable)
 
-- BONUS: 
-Faire en sorte de contraindre le type générique 
-en n'acceptant que les héros qui sont capables de voler
-( page 41 du support )
+BONUS
+- Créer un builder qui retourner une nouvelle arme (faire usage des paramètres optionnels dans ...params)
