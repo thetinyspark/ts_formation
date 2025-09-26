@@ -13,7 +13,11 @@ type BuilderInfo = {uniq:Boolean, builder:Function};
 
 export class DynamicFactory {
 
+    // on une map qui contient les éventuelles instances uniques associées à une clé (string)
     private _instances: Map<string, any> = new Map();
+
+    // ici on a une map qui stocke des infos nous permettant de créer des instances d'objets 
+    // (toujours en fonction d'une clé)
     private _builders:Map<string, BuilderInfo> = new Map();
 
     public registerBuilder( type: string, builder: Function, uniq: boolean = false ): void {
@@ -23,10 +27,10 @@ export class DynamicFactory {
         this._builders.set(type, {builder, uniq});
     }
 
-    public createInstance<T>(type:string = "SHONEN",  ...params:any[]): T|null {
+    public createInstance<T>(type:string,  ...params:any[]): T|null {
 
         // on déclare une variable qui va contenir l'instance
-        let heroe = null;
+        let instance = null;
 
         // on récupère l'objet BuilderInfo en fonction de la clé (type)
         let info:BuilderInfo|null = this._builders.get(type) || null;
@@ -42,19 +46,19 @@ export class DynamicFactory {
         }
 
         // on crée l'instance via la fonction builder
-        heroe = info.builder(...params) || null;
+        instance = info.builder(...params) || null;
 
         // si l'instance n'a pas pu être créée, on retourne null
-        if( heroe === null ){
+        if( instance === null ){
             return null;
         }
 
         // si l'instance doit être unique, on l'enregistre dans la map des instances
         if( info.uniq ){
-            this._instances.set(type, heroe);
+            this._instances.set(type, instance);
         }
 
         // on retourne l'instance
-        return heroe as T;
+        return instance as T;
     }
 }
