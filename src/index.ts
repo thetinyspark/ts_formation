@@ -1,22 +1,17 @@
-import * as HeroePool from "./dc";
-// import { SuperHeroe, League } from "./dc";
-// import { SuperHeroe, League } from "./marvel";
+import { Inventory } from "./ui/Inventory";
+import { Weapon } from "./weapon/Weapon";
 
+const bag = new Inventory<string, Weapon|string>();
+const sword = new Weapon("Sword", 10);
+const axe = new Weapon("Axe", 15);
 
-const league = new HeroePool.League();
-const heroe = new HeroePool.SuperHeroe("green arrow");
+bag.addItem("excalibur", sword);
+bag.addItem("hache conan", axe);   
+bag.addItem("message", "Tuer les ennemis les voir mourir devant soi");   
+bag.addItem("numEnnemies", "100");   
 
-// const league = new League();
-// const heroe = new SuperHeroe("green arrow");
+bag.removeItem("excalibur");
+bag.removeItem("message");
+bag.removeItem("hache conan");
 
-// les namespaces permettent d'éviter les conflits de noms
-// toutefois en typescript moderne, vu que chaque fichier est un module, 
-// on peut aussi utiliser les imports/exports pour éviter les conflits de noms. 
-
-// les namespaces sont donc un peu dépréciés, mais on les trouve encore dans beaucoup de code legacy.
-
-
-league.nonFlyingHeroes.push(heroe);
-
-console.log(league.flyingHeroes);
-console.log(league.nonFlyingHeroes);
+console.log(bag.getIemByKey("numEnnemies"));

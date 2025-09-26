@@ -1,28 +1,22 @@
-export namespace UI{
+export class Inventory<U,T> {
+  private _items: Map<U,T> = new Map<U,T>();
 
+  public addItem(key:U, item: T) {
+    this._items.set(key, item);
+  }
 
-    export namespace SubUI{
-        export class SubInventory{}
-    }
+  public removeItem(key:U) {
+    this._items.delete(key);
+  }
 
-    export class Inventory{
+  public getIemByKey<I>(key:U): I | null {
+    const item = this._items.get(key) || null;
+    if( item == null ) return null;
 
-        private _items:string[] = [];
+    return item as unknown as I;
+  }
 
-        public addItem( item:string ){
-            this._items.push( item );
-        }
-
-        public removeItem( item:string ){
-            // find and remove item
-            const index = this._items.indexOf( item );
-            if( index > -1 ){
-                this._items.splice( index, 1 );
-            }
-        }
-
-        public get items():string[]{
-            return this._items;
-        }
-    }
+  public get items(): T[] {
+    return Array.from( this._items.values() ) as T[];
+  }
 }

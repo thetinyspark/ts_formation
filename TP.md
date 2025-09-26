@@ -1,12 +1,10 @@
-TP n°4
+TP n°5
 
+- Créer une classe générique HeroePool
+utilisant la généricité, vous devez pouvoir 
+stocker des héros, les associer à une clé (comme dans inventory) et les retrouver par le biais de leur clé. 
 
-Créer un namespace nommé Marvel qui contiendra des héros qui héritent 
-de classe Heroe et qui implémentent IMUtant et peut être IFlyingCharacter
-
-Créer un namespace nommé DCComics qui contiendra des héros qui héritent 
-de classe Heroe et qui implémentent IMUtant et peut être IFlyingCharacter
-
-- Chacun de ces espaces de noms (namespace) doit contenir une classe 
-nommée League. Cette classe a pour fonctionnalité de retourner une liste 
-de héros avec la méthode "getLeague():Heroe[]";
+- BONUS: 
+Faire en sorte de contraindre le type générique 
+en n'acceptant que les héros qui sont capables de voler
+( page 41 du support )
