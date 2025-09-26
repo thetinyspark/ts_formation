@@ -5,4 +5,4 @@ TP n°6
 - Créer une variable qui pourra accueillir indifféremment les 2 valeurs (donc utiliser la bonne interface pour typer la variable)
 
 BONUS
-- Créer un builder qui retourner une nouvelle arme (faire usage des paramètres optionnels dans ...params)
+- Créer un builder qui retourne une nouvelle arme (faire usage des paramètres optionnels dans ...params)

@@ -1,52 +1,55 @@
-import {DynamicFactory, HeroeType } from "./factory/DynamicFactory";
-import { NonFlyingHeroe } from "./heroes/NonFlyingHeroe";
-import { ShonenHeroe } from "./heroes/ShonenHeroe";
-import { UniqHeroe } from "./heroes/UniqHeroe";
+// import "reflect-metadata";
 
+import { DynamicFactory } from "./factory/DynamicFactory";
 
 const factory = new DynamicFactory();
 
-function createZigouigoui(age:number, name:string){
-    return {
-        name: name, 
-        age: age
-    };
+// décorateur de fonction/méthode
+function LogMethodCall(
+  target: any,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
+    // on va chercher l'implémentation de la fonction
+  const func = descriptor.value;
+  descriptor.value = function (...args: any[]) {
+    console.log(`Appel de ${propertyKey} avec`, args);
+    return func.apply(this, args);
+  };
 }
 
-factory.registerBuilder("zigouigoui", createZigouigoui, true);
-console.log( factory.createInstance("zigouigoui", 10, "toto") );
-console.log( factory.createInstance("zigouigoui", 50, "tata") );
-console.log( factory.createInstance("cle_qui_existe_pas") );
+function Logger() {
+  return function (constructor: Function) {
+    console.log(`${constructor.name} class created`);
+  };
+}
+
+function Injectable( key:string, builder:Function, uniq:boolean ){
+    return function (constructor:Function){
+        factory.registerBuilder( key, builder, uniq);
+    }
+}
+
+function Inject(key:string, ...params:any[]){
+    return factory.createInstance(key, ...params);
+}
 
 
-/*
-factory.registerBuilder( HeroeType.SHONEN, (name:string, hp:number)=> {
-    const heroe = new ShonenHeroe();
-    heroe.name = name;
-    heroe.hp = hp;
-    return heroe;
-} );
 
-factory.registerBuilder( HeroeType.UNIQ, (name:string, hp:number)=> {
-    const heroe = new UniqHeroe();
-    heroe.name = name;
-    heroe.hp = hp;
-    return heroe;
-} , true );
 
-factory.registerBuilder( HeroeType.NON_FLYING, (name:string, hp:number)=> {
-    const heroe = new NonFlyingHeroe();
-    heroe.name = name;
-    heroe.hp = hp;
-    return heroe;
-} );
+@Injectable("Test", ()=> new Test(), false)
+class Test {
 
-const uniqHeroe1 = factory.createInstance(HeroeType.UNIQ, "Jack Sparrow", 100 );
-const uniqHeroe2 = factory.createInstance(HeroeType.UNIQ, "Barbossa", 100);
+  public name:string;
 
-console.log( uniqHeroe1 === uniqHeroe2 );  // true
-*/
+//   @LogMethodCall
+  helloWorld(param: string) {
+    // console.log(param);
+  }
 
-// console.log( factory.createHeroe<IMutant & IFlyingCharacter>("Goku", 150, HeroeType.SHONEN) );
-// console.log( factory.createHeroe<IMutant>("Spiderman", 100, HeroeType.NON_FLYING) );
-// console.log( factory.createHeroe("Jack Sparrow", 100, HeroeType.UNIQ) );
+  constructor(){this.name = ""}
+}
+
+const test1 = Inject("Test", 10,10);
+const test2 = Inject("Test", 10,10);
+console.log(test1 === test2);
